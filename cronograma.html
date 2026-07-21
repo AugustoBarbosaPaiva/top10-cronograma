@@ -32,7 +32,10 @@
 
   /* time blocks */
   .blocks{display:grid;gap:8px}
-  .block{display:flex;align-items:center;gap:14px;padding:13px 16px;border:1px solid var(--line);border-radius:11px;background:var(--panel2)}
+  .block{display:flex;align-items:center;gap:14px;padding:13px 16px;border:1px solid var(--line);border-radius:11px;background:var(--panel2);transition:opacity .25s,filter .25s}
+  /* horário que já passou hoje: apagadinho; volta ao normal ao passar o mouse */
+  .block.past{opacity:.32;filter:saturate(.4)}
+  .block.past:hover{opacity:1;filter:none}
   .block .t{font-variant-numeric:tabular-nums;color:var(--dim);font-size:13px;min-width:104px;font-weight:600}
   .block .n{font-weight:600}
   .block .now{margin-left:8px;font-size:11px;color:var(--accent);border:1px solid var(--accent);border-radius:99px;padding:2px 9px}

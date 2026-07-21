@@ -1,4 +1,4 @@
-﻿
+
 const PEOPLE=["Augusto","Lucas","Nicolas"];
 const COLORS={"Augusto":"#ff5a3c","Lucas":"#3b82f6","Nicolas":"#2ea043"};
 const FLAG_BR='<svg class="flag" viewBox="0 0 28 20"><rect width="28" height="20" fill="#009c3b"/><path d="M14 3 25 10 14 17 3 10Z" fill="#ffdf00"/><circle cx="14" cy="10" r="4" fill="#002776"/></svg>';

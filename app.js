@@ -359,9 +359,12 @@ function highlightNow(){
   let g="", bc="var(--accent)";
   if(f==="tool"){g="gblue"; bc="var(--blue)";}
   else if(!f){g="gyellow"; bc="#e3b341";}
+  const isToday = (selDay===todayIdx); // só apaga horários passados quando vê o dia de hoje
   document.querySelectorAll(".block[data-start]").forEach(b=>{
     const on = mins>=(+b.dataset.start) && mins<(+b.dataset.end);
+    const past = isToday && mins>=(+b.dataset.end); // já terminou hoje
     b.classList.toggle("nowglow", on);
+    b.classList.toggle("past", past); // fica apagadinho; volta ao normal ao passar o mouse
     b.classList.remove("gblue","gyellow");
     if(on && g) b.classList.add(g);
     // borda de destaque do bloco de trabalho: só acende no horário atual, senão normaliza

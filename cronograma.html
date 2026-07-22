@@ -32,10 +32,14 @@
 
   /* time blocks */
   .blocks{display:grid;gap:8px}
-  .block{display:flex;align-items:center;gap:14px;padding:13px 16px;border:1px solid var(--line);border-radius:11px;background:var(--panel2);transition:opacity .25s,filter .25s}
-  /* horário que já passou hoje: apagadinho; volta ao normal ao passar o mouse */
-  .block.past{opacity:.32;filter:saturate(.4)}
-  .block.past:hover{opacity:1;filter:none}
+  .block{display:flex;align-items:center;gap:12px;padding:13px 16px;border:1px solid var(--line);border-radius:11px;background:var(--panel2)}
+  .block[tabindex]:focus{outline:none}
+  /* horário concluído (já passou hoje): SÓ o texto da atividade fica desfocado (hora e borda ficam nítidas) */
+  .block.past .reveal{filter:blur(6px);transition:filter .3s ease}
+  /* ao passar o mouse (ou focar via teclado) na linha, o desfoque some suavemente */
+  .block.past:hover .reveal,
+  .block.past:focus .reveal,
+  .block.past:focus-within .reveal{filter:blur(0)}
   .block .t{font-variant-numeric:tabular-nums;color:var(--dim);font-size:13px;min-width:104px;font-weight:600}
   .block .n{font-weight:600}
   .block .now{margin-left:8px;font-size:11px;color:var(--accent);border:1px solid var(--accent);border-radius:99px;padding:2px 9px}
@@ -210,10 +214,10 @@
     <div class="today" id="today"></div>
 
     <div class="blocks">
-      <div class="block" data-start="690" data-end="810"><span class="t">11h30–13h30</span><span class="n" id="blk1n">Chegada e almoço</span></div>
-      <div class="block work" id="workBlock" data-start="810" data-end="1110"><span class="t">13h30–18h30</span><span class="n" id="workText">Trabalho · 5h</span></div>
-      <div class="block" data-start="1110" data-end="1140"><span class="t">18h30–19h00</span><span class="n" id="blk3n">Pausa</span></div>
-      <div class="block" data-start="1140" data-end="1230"><span class="t">19h00–20h30</span><span class="n" id="blk4n">Curso de IA</span></div>
+      <div class="block" tabindex="0" data-start="690" data-end="810"><span class="t">11h30–13h30</span><span class="n reveal" id="blk1n">Chegada e almoço</span></div>
+      <div class="block work" tabindex="0" id="workBlock" data-start="810" data-end="1110"><span class="t">13h30–18h30</span><span class="n reveal" id="workText">Trabalho · 5h</span></div>
+      <div class="block" tabindex="0" data-start="1110" data-end="1140"><span class="t">18h30–19h00</span><span class="n reveal" id="blk3n">Pausa</span></div>
+      <div class="block" tabindex="0" data-start="1140" data-end="1230"><span class="t">19h00–20h30</span><span class="n reveal" id="blk4n">Curso de IA</span></div>
     </div>
 
     <div class="week" id="week"></div>

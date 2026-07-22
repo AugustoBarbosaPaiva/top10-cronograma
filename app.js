@@ -126,17 +126,6 @@ function render(){
       <td>${cnt("es",bp.es)}</td></tr>`;
   }).join("");
 
-  // curso (em minutos)
-  const tot=COURSE_TOTAL*60;
-  const min=db.courseMinutes;
-  const pct=Math.min(100,min/tot*100);
-  document.getElementById("cHrs").textContent=fmt(min);
-  const rg=document.getElementById("cRange");
-  rg.value=Math.floor(min/60);
-  rg.style.background=`linear-gradient(90deg, var(--accent) ${pct}%, var(--panel2) ${pct}%)`;
-  document.getElementById("cPct").textContent=Math.round(pct)+"%";
-  document.getElementById("cLeft").textContent=fmt(Math.max(0,tot-min));
-
   // visão geral (soma de todas as semanas)
   let sPt=0,sEs=0;const per={};PEOPLE.forEach(p=>per[p]=0);
   Object.values(db.weeks||{}).forEach(x=>{
@@ -146,7 +135,7 @@ function render(){
   document.getElementById("summary").innerHTML=
     tile(FLAG_BR+"Publicados PT",sPt)+tile(FLAG_ES+"Publicados ES",sEs)+
     PEOPLE.map(p=>tile("Feitos · "+p,per[p],COLORS[p])).join("")+
-    tile("Curso de IA",fmt(db.courseMinutes))+tile("Total (PT+ES)",sPt+sEs,"var(--accent)");
+    tile("Total (PT+ES)",sPt+sEs,"var(--accent)");
 
   renderDay();
   renderCal();
@@ -171,29 +160,6 @@ document.getElementById("calToggle").onclick=()=>{
   else{b.style.display="none";btn.textContent="📅 Abrir calendário";}
 };
 
-function addTime(){
-  const inp=document.getElementById("addTime");
-  const v=parseTime(inp.value);
-  if(!v){alert("Não entendi o tempo. Tente algo como: 1h30, 45min, 2h, 1:30 ou 90 (minutos).");return;}
-  db.courseMinutesPrev=db.courseMinutes;
-  db.courseMinutes=Math.min(COURSE_TOTAL*60,db.courseMinutes+v);
-  inp.value="";save();render();
-}
-document.getElementById("addBtn").onclick=addTime;
-document.getElementById("addTime").addEventListener("keydown",e=>{if(e.key==="Enter")addTime();});
-// slider define as HORAS (mantém os minutos que já estavam)
-document.getElementById("cRange").addEventListener("pointerdown",()=>{db.courseMinutesPrev=db.courseMinutes;});
-document.getElementById("cRange").addEventListener("input",e=>{
-  db.courseMinutes=(+e.target.value)*60 + (db.courseMinutes%60);
-  render();
-});
-document.getElementById("cRange").addEventListener("change",save);
-// "Voltar": desfaz a última mudança (restaura o valor anterior, guardado nos dados = sobrevive ao F5). Clicar de novo alterna.
-document.getElementById("resetBtn").onclick=()=>{
-  if(db.courseMinutesPrev==null)return;
-  const atual=db.courseMinutes; db.courseMinutes=db.courseMinutesPrev; db.courseMinutesPrev=atual;
-  save();render();
-};
 document.body.addEventListener("click",e=>{
   const per=e.target.closest("[data-person]");
   if(per){const w=wk();const p=per.dataset.person,ch=per.dataset.ch;w.byPerson[p]=w.byPerson[p]||{pt:0,es:0};w.byPerson[p][ch]=Math.max(0,(w.byPerson[p][ch]||0)+ +per.dataset.d);save();render();return;}
@@ -340,7 +306,6 @@ function showDay(key){
   if(!e){det.className="caldetail muted";det.textContent="Sem registro nesse dia.";return;}
   let snap="";
   if(e.snapshot){snap="<div style='margin-top:10px'>"+PEOPLE.map(p=>{const bp=e.snapshot[p]||{};return `<b style="color:${COLORS[p]}">${p}</b>: PT ${bp.pt||0} · ES ${bp.es||0}`;}).join("<br>")+"</div>";}
-  if(e.courseMinutes!=null) snap+=`<div style='margin-top:8px'>Curso nesse dia: <b>${fmt(e.courseMinutes)}</b></div>`;
   det.className="caldetail";
   det.innerHTML=`<b>${parts[2]}/${parts[1]}/${parts[0]}</b>${e.savedAt?` · salvo às ${e.savedAt}`:""}${e.note&&e.note.trim()?`<div class="cnote">${escapeHtml(e.note)}</div>`:""}${snap}`;
 }

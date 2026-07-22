@@ -34,12 +34,9 @@
   .blocks{display:grid;gap:8px}
   .block{display:flex;align-items:center;gap:12px;padding:13px 16px;border:1px solid var(--line);border-radius:11px;background:var(--panel2)}
   .block[tabindex]:focus{outline:none}
-  /* horário concluído (já passou hoje): SÓ o texto da atividade fica desfocado (hora e borda ficam nítidas) */
-  .block.past .reveal{filter:blur(6px);transition:filter .3s ease}
-  /* ao passar o mouse (ou focar via teclado) na linha, o desfoque some suavemente */
-  .block.past:hover .reveal,
-  .block.past:focus .reveal,
-  .block.past:focus-within .reveal{filter:blur(0)}
+  /* horário concluído (já passou hoje): risco + ✓ na cor do dia; a hora fica nítida */
+  .block.past .reveal{color:var(--dim);text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--coverc,var(--accent))}
+  .block.past::before{content:"✓";color:var(--coverc,var(--accent));font-weight:800;font-size:14px;line-height:1;flex:0 0 auto}
   .block .t{font-variant-numeric:tabular-nums;color:var(--dim);font-size:13px;min-width:104px;font-weight:600}
   .block .n{font-weight:600}
   .block .now{margin-left:8px;font-size:11px;color:var(--accent);border:1px solid var(--accent);border-radius:99px;padding:2px 9px}

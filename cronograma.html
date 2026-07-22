@@ -34,8 +34,12 @@
   .blocks{display:grid;gap:8px}
   .block{display:flex;align-items:center;gap:12px;padding:13px 16px;border:1px solid var(--line);border-radius:11px;background:var(--panel2)}
   .block[tabindex]:focus{outline:none}
-  /* horário concluído (já passou hoje): risco + ✓ na cor do dia; a hora fica nítida */
-  .block.past .reveal{color:var(--dim);text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--coverc,var(--accent))}
+  /* horário concluído (já passou hoje): risco + ✓ na cor do dia + blur leve nas letras; hora nítida */
+  .block.past .reveal{color:var(--dim);text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--coverc,var(--accent));filter:blur(2.5px);transition:filter .3s ease}
+  /* ao passar o mouse (ou focar via teclado), o blur some e o texto fica nítido */
+  .block.past:hover .reveal,
+  .block.past:focus .reveal,
+  .block.past:focus-within .reveal{filter:blur(0)}
   .block.past::before{content:"✓";color:var(--coverc,var(--accent));font-weight:800;font-size:14px;line-height:1;flex:0 0 auto}
   .block .t{font-variant-numeric:tabular-nums;color:var(--dim);font-size:13px;min-width:104px;font-weight:600}
   .block .n{font-weight:600}

@@ -3,11 +3,11 @@ const PEOPLE=["Augusto","Lucas","Nicolas"];
 const COLORS={"Augusto":"#ff5a3c","Lucas":"#3b82f6","Nicolas":"#2ea043"};
 const FLAG_BR='<svg class="flag" viewBox="0 0 28 20"><rect width="28" height="20" fill="#009c3b"/><path d="M14 3 25 10 14 17 3 10Z" fill="#ffdf00"/><circle cx="14" cy="10" r="4" fill="#002776"/></svg>';
 const FLAG_ES='<svg class="flag" viewBox="0 0 28 20"><rect width="28" height="20" fill="#c60b1e"/><rect y="5.5" width="28" height="9" fill="#ffc400"/></svg>';
-const ROT=[[3,2,2],[2,3,2],[2,2,3]];
+// (removido) ROT — não há mais vídeo extra girando; meta fixa de 3 por pessoa
 // dias: nome curto, foco, label
 const DAYS=[
   {d:"Seg",f:"prod",w:"vídeos"},{d:"Ter",f:"prod",w:"vídeos"},
-  {d:"Qua",f:"tool",w:"ferramenta"},{d:"Qui",f:"tool",w:"ferramenta"},
+  {d:"Qua",f:"prod",w:"vídeos"},{d:"Qui",f:"tool",w:"ferramenta"},
   {d:"Sex",f:"tool",w:"ferramenta"},{d:"Sáb",f:"",w:"opcional"},{d:"Dom",f:"",w:"opcional"}
 ];
 const FULL=["Segunda","Terça","Quarta","Quinta","Sexta","Sábado","Domingo"];
@@ -68,11 +68,10 @@ function parseTime(s){
 }
 
 function render(){
-  const cyc=(curWeek-1)%3;
   document.getElementById("weekLbl").textContent="Semana "+curWeek;
   const isCur=curWeek===curWeekNum;
   document.getElementById("cycleInfo").innerHTML=
-    `${weekRange(curWeek)} · vez extra: <b style="color:${COLORS[PEOPLE[cyc]]}">${PEOPLE[cyc]}</b>`+
+    `${weekRange(curWeek)}`+
     (isCur?` · <b style="color:var(--accent)">semana atual</b>`:` · <span class="backhoje" id="goCur">ir pra semana atual</span>`);
   const w=wk();
 
@@ -92,14 +91,14 @@ function render(){
   const wb=document.getElementById("workBlock");
   // a borda do bloco de trabalho é controlada por highlightNow (só acende no horário atual)
   if(sd.f){
-    ["blk1n","blk3n","blk4n"].forEach(id=>document.getElementById(id).style.color="");
+    ["blk1n","blkCurso","blkCafe"].forEach(id=>document.getElementById(id).style.color="");
     document.getElementById("blk1n").textContent="Chegada e almoço";
-    document.getElementById("blk3n").textContent="Pausa";
-    document.getElementById("blk4n").textContent="Curso de IA";
+    document.getElementById("blkCurso").textContent="Curso de IA · 1h30";
+    document.getElementById("blkCafe").textContent="Café / respiro";
     const wt=sd.f==="prod"?"Produção de vídeos":"Ferramenta";
     document.getElementById("workText").innerHTML=`Trabalho · 5h &nbsp;→&nbsp; <span style="color:${dc}">${wt}</span>`;
   }else{
-    ["blk1n","blk3n","blk4n","workText"].forEach(id=>{const el=document.getElementById(id);el.textContent="opcional";el.style.color="#e3b341";});
+    ["blk1n","blkCurso","blkCafe","workText"].forEach(id=>{const el=document.getElementById(id);el.textContent="opcional";el.style.color="#e3b341";});
   }
 
   // faixa da semana (clicável)
@@ -112,18 +111,17 @@ function render(){
   PEOPLE.forEach(p=>{const bp=w.byPerson[p]||{};wpt+=bp.pt||0;wes+=bp.es||0;});
   document.getElementById("ptTxt").textContent=wpt;
   document.getElementById("esTxt").textContent=wes;
-  document.getElementById("ptBar").style.width=Math.min(100,wpt/7*100)+"%";
-  document.getElementById("esBar").style.width=Math.min(100,wes/7*100)+"%";
-  const wok=document.getElementById("weekOk"); if(wok) wok.style.display=(wpt>=7&&wes>=7)?"inline-block":"none";
+  document.getElementById("ptBar").style.width=Math.min(100,wpt/9*100)+"%";
+  document.getElementById("esBar").style.width=Math.min(100,wes/9*100)+"%";
+  const wok=document.getElementById("weekOk"); if(wok) wok.style.display=(wpt>=9&&wes>=9)?"inline-block":"none";
 
-  // rodízio (cada pessoa anota PT e ES)
-  const q=ROT[cyc];
-  document.getElementById("rodizio").innerHTML=PEOPLE.map((p,i)=>{
+  // metas por pessoa: todos iguais (3 por semana, sem rodízio)
+  document.getElementById("rodizio").innerHTML=PEOPLE.map(p=>{
     const bp=w.byPerson[p]||{pt:0,es:0};
     const cnt=(ch,v)=>`<div class="counter"><button data-person="${p}" data-ch="${ch}" data-d="1">+</button><span class="val">${v||0}</span><button data-person="${p}" data-ch="${ch}" data-d="-1">−</button></div>`;
     return `<tr>
       <td><span class="dot" style="background:${COLORS[p]}"></span>${p}</td>
-      <td>${q[i]}</td>
+      <td>3</td>
       <td>${cnt("pt",bp.pt)}</td>
       <td>${cnt("es",bp.es)}</td></tr>`;
   }).join("");

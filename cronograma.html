@@ -210,15 +210,15 @@
   <!-- CRONOGRAMA -->
   <div class="card">
     <h2>Cronograma</h2>
-    <p class="lead">Todo dia segue os <b>mesmos horários</b>. A única coisa que muda é o que você faz no <b>bloco de trabalho (13h30–18h30)</b> — e isso depende do dia da semana.</p>
+    <p class="lead">Todo dia segue os <b>mesmos horários</b>. A única coisa que muda é o que você faz no <b>bloco de trabalho (15h20–20h20)</b> — e isso depende do dia da semana.</p>
 
     <div class="today" id="today"></div>
 
     <div class="blocks">
       <div class="block" tabindex="0" data-start="690" data-end="810"><span class="t">11h30–13h30</span><span class="n reveal" id="blk1n">Chegada e almoço</span></div>
-      <div class="block work" tabindex="0" id="workBlock" data-start="810" data-end="1110"><span class="t">13h30–18h30</span><span class="n reveal" id="workText">Trabalho · 5h</span></div>
-      <div class="block" tabindex="0" data-start="1110" data-end="1140"><span class="t">18h30–19h00</span><span class="n reveal" id="blk3n">Pausa</span></div>
-      <div class="block" tabindex="0" data-start="1140" data-end="1230"><span class="t">19h00–20h30</span><span class="n reveal" id="blk4n">Curso de IA</span></div>
+      <div class="block" tabindex="0" data-start="810" data-end="900"><span class="t">13h30–15h00</span><span class="n reveal" id="blkCurso">Curso de IA · 1h30</span></div>
+      <div class="block" tabindex="0" data-start="900" data-end="920"><span class="t">15h00–15h20</span><span class="n reveal" id="blkCafe">Café / respiro</span></div>
+      <div class="block work" tabindex="0" id="workBlock" data-start="920" data-end="1220"><span class="t">15h20–20h20</span><span class="n reveal" id="workText">Trabalho · 5h</span><span class="note">30 min finais: anotar números</span></div>
     </div>
 
     <div class="week" id="week"></div>
@@ -245,13 +245,13 @@
 
     <!-- VIDEOS -->
     <div class="card">
-      <h2>Vídeos da semana · meta 7 por canal</h2>
-      <div class="goalrow"><span><svg class="flag" viewBox="0 0 28 20"><rect width="28" height="20" fill="#009c3b"/><path d="M14 3 25 10 14 17 3 10Z" fill="#ffdf00"/><circle cx="14" cy="10" r="4" fill="#002776"/></svg>Português</span><b><span id="ptTxt">0</span> / 7</b></div>
+      <h2>Vídeos da semana · meta 9 por canal</h2>
+      <div class="goalrow"><span><svg class="flag" viewBox="0 0 28 20"><rect width="28" height="20" fill="#009c3b"/><path d="M14 3 25 10 14 17 3 10Z" fill="#ffdf00"/><circle cx="14" cy="10" r="4" fill="#002776"/></svg>Português</span><b><span id="ptTxt">0</span> / 9</b></div>
       <div class="bar pt"><i id="ptBar"></i></div>
-      <div class="goalrow" style="margin-top:14px"><span><svg class="flag" viewBox="0 0 28 20"><rect width="28" height="20" fill="#c60b1e"/><rect y="5.5" width="28" height="9" fill="#ffc400"/></svg>Espanhol</span><b><span id="esTxt">0</span> / 7</b></div>
+      <div class="goalrow" style="margin-top:14px"><span><svg class="flag" viewBox="0 0 28 20"><rect width="28" height="20" fill="#c60b1e"/><rect y="5.5" width="28" height="9" fill="#ffc400"/></svg>Espanhol</span><b><span id="esTxt">0</span> / 9</b></div>
       <div class="bar es"><i id="esBar"></i></div>
       <div id="weekOk" class="weekok" style="display:none">✓ SEMANA OK</div>
-      <p class="muted" style="margin-top:14px">Cada um anota no <b>Rodízio</b> — PT e ES separados. Fica salvo pros três.</p>
+      <p class="muted" style="margin-top:14px">Cada um faz <b>3 por semana</b> (PT+ES) = <b>9 no total</b>. 7 vão pro feed e 2 pra gaveta. Fica salvo pros três.</p>
     </div>
 
     <!-- CURSO -->

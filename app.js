@@ -364,7 +364,8 @@ function highlightNow(){
     const on = mins>=(+b.dataset.start) && mins<(+b.dataset.end);
     const past = isToday && mins>=(+b.dataset.end); // já terminou hoje
     b.classList.toggle("nowglow", on);
-    b.classList.toggle("past", past); // texto da atividade fica desfocado; some ao passar o mouse
+    b.classList.toggle("past", past); // concluído: risco + ✓ na cor do dia
+    b.style.setProperty("--coverc", bc); // cor do risco/✓ = cor do dia (laranja/azul/amarelo)
     b.classList.remove("gblue","gyellow");
     if(on && g) b.classList.add(g);
     // borda de destaque do bloco de trabalho: só acende no horário atual, senão normaliza
